@@ -2,10 +2,10 @@
     <template if:true={isInput}>
         <lightning-input lwc:spread={inputProps}></lightning-input>
     </template>
-    <template if:true={isLong}>
+    <template if:true={isTextArea}>
         <lightning-textarea lwc:spread={inputProps}></lightning-textarea>
     </template>
-    <template if:true={isRich}>
+    <template if:true={isRichText}>
         <lightning-input-rich-text lwc:spread={inputProps}></lightning-input-rich-text>
     </template>
 </template>

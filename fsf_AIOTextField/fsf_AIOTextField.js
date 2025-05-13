@@ -3,18 +3,20 @@ import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 
 export default class Fsf_AIOTextField extends LightningElement {
     @api label;
-    @api component;
+    @api component = 'input';
     @api placeholder;
     @api value;
+    @api helpText;
     @api required;
     @api disabled;
     @api readonly;
-    @api type;
+    @api type = 'text';
     @api formatter;
     @api max;
     @api min;
     @api pattern;
     @api step;
+    @api disabledCategories;
     @api emptyErrorMessage;
     @api maxErrorMessage;
     @api minErrorMessage;
@@ -42,34 +44,37 @@ export default class Fsf_AIOTextField extends LightningElement {
     }
 
     get isInput() {
+        console.log(this.component);
         return this.component === 'input';
     }
 
-    get isLong() {
+    get isTextArea() {
         return this.component === 'textarea';
     }
 
-    get isRich() {
+    get isRichText() {
         return this.component === 'richtext';
     }
 
     get inputProps() {
         let props = {
-            disabled: this.disabled,
-            label: this.label,
-            required: this.required,
-            value: this.value,
-            onchange: this.onchange,
+            disabled: this.disabled ?? false,
+            label: this.label ?? '',
+            required: this.required ?? false,
+            value: this.value ?? '',
+            fieldLevelHelp: this.helpText,
+            onchange: this.handleChange.bind(this),
         };
-
+        console.log(this.type);
         switch (this.component) {
-            case 'text':
+            default:
+            case 'input':
                 const textPropsByTypes = {
                     'text': ['maxlength', 'minlength', 'pattern', 'placeholder', 'message-when-pattern-mismatch', 'message-when-too-long', 'message-when-too-short'],
                     'number': ['formatter', 'max', 'min', 'placeholder', 'step', 'message-when-range-overflow', 'message-when-range-underflow'],
                     'date': ['max', 'min', 'placeholder'],
                     'datetime': ['max', 'min'],
-                    'email': ['maxlength', 'minlength', 'patter', 'placeholder', 'message-when-patter-mismatch', 'message-when-too-long', 'message-when-too-short'],
+                    'email': ['maxlength', 'minlength', 'pattern', 'placeholder', 'message-when-pattern-mismatch', 'message-when-too-long', 'message-when-too-short'],
                     'password': ['placeholder', 'maxlength', 'minlength', 'pattern', 'message-when-pattern-mismatch', 'message-when-too-long', 'message-when-too-short'],
                     'time': ['max', 'min'],
                     'url': ['maxlength', 'minlength', 'pattern', 'placeholder', 'message-when-pattern-mismatch', 'message-when-too-long', 'message-when-too-short'],
@@ -90,22 +95,22 @@ export default class Fsf_AIOTextField extends LightningElement {
                         acc[propName] = textPropsVarNames.hasOwnProperty(propName) ? this[textPropsVarNames[propName]] : this[propName];
                         return acc;
                     },
-                    { ...props, readonly: this.readonly }
+                    { ...props, type: this.type, readonly: this.readonly }
                 );
 
                 if (this.type === 'number') {
-                    if (props.hasOwnProperty(max)) props.max = parseFloat(props.max);
-                    if (props.hasOwnProperty(min)) props.min = parseFloat(props.min);
-                    if (props.hasOwnProperty(step)) props.step = parseFloat(props.step);
+                    if (props.hasOwnProperty('max')) props.max = parseFloat(props.max);
+                    if (props.hasOwnProperty('min')) props.min = parseFloat(props.min);
+                    if (props.hasOwnProperty('step')) props.step = parseFloat(props.step);
                 }
 
                 if (textPropsByTypes[this.type].includes('maxlength')) {
-                    if (props.hasOwnProperty(maxlength)) props.maxlength = parseInt(props.maxlength);
-                    if (props.hasOwnProperty(minlength)) props.minlength = parseInt(props.minlength);
+                    if (props.hasOwnProperty('maxlength')) props.maxlength = parseInt(props.maxlength);
+                    if (props.hasOwnProperty('minlength')) props.minlength = parseInt(props.minlength);
                 }
             break;
 
-            case 'longtext':
+            case 'textarea':
                 props = {
                     ...props,
                     readonly: this.readonly,
@@ -113,18 +118,20 @@ export default class Fsf_AIOTextField extends LightningElement {
                     minlength: parseInt(this.min),
                     placeholder: this.placeholder,
                     'message-when-too-short': this.minErrorMessage,
-                    'message-when-too-loong': this.maxErrorMessage,
+                    'message-when-too-long': this.maxErrorMessage,
                 }
             break;
 
-            case 'richttext':
+            case 'richtext':
                 props = {
                     ...props,
                     placeholder: this.placeholder,
+                    disabledCategories: this.disabledCategories ?? '',
+                    labelVisible: true,
                 }
             break;
         }
-
+        console.log(JSON.stringify(props));
         return props;
     }
 }

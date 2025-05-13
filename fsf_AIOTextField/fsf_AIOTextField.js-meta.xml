@@ -13,15 +13,17 @@
                 <property name="label" label="Label" type="String" />
                 <property name="placeholder" label="Placeholder" type="String" />
                 <property name="value" label="Value" type="String" />
-                <property name="required" label="Required" type="Boolean" default="false" />
-                <property name="disabled" label="Disabled" type="Boolean" default="false" />
-                <property name="readonly" label="Readonly" type="Boolean" default="false" description="Only for Component input and textarea" />
+                <property name="helpText" label="Help text" type="String" />
+                <property name="required" label="Required" type="Boolean" />
+                <property name="disabled" label="Disabled" type="Boolean" />
+                <property name="readonly" label="Readonly" type="Boolean" description="Only for Component input and textarea" />
                 <property name="type" label="Type" type="String" default="text" description="Only for Component input. Acceptable values: color, date, datetime, email, number, password, text, time, url" />
                 <property name="formatter" label="Formatter" type="String" description="Only for Component input of Type number. Acceptable values: currency, decimal, percent, percent-fixed" />
                 <property name="max" label="Max" type="String" description="Maximum number of characters or Maximum value acceptable." />
                 <property name="min" label="Min" type="String" description="Minimum number of characters or Minimum value acceptable." />
                 <property name="pattern" label="Pattern" type="String" description="Only for Component input of Types: email, password, text, url" />
                 <property name="step" label="Step" type="String" description="Only for Component text of Type number" />
+                <property name="disabledCategories" label="Disabled categories" type="String" description="A comma-separated list of button categories to remove from the toolbar. Only for Component richtext. Acceptable values: FORMAT_FONT, FORMAT_TEXT, FORMAT_BODY, ALIGN_TEXT, INSERT_CONTENT, REMOVE_FORMATTING" />
                 <property name="emptyErrorMessage" label="Empty error message" type="String" description="Error message to be displayed when a required field is empty" />
                 <property name="maxErrorMessage" label="Above max error message" type="String" description="Error message to be displayed when the value is above the maximum" />
                 <property name="minErrorMessage" label="Bellow min error message" type="String" description="Error message to be displayed when the value is bellow the minimum" />
