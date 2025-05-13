@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel>All in One Text Field</masterLabel>
     <description>Renders any type of text field (input, textarea, richtext).</description>
-    <apiVersion>61.0</apiVersion>
+    <apiVersion>63.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
         <target>lightning__FlowScreen</target>
@@ -15,7 +15,7 @@
                 <property name="value" label="Value" type="String" />
                 <property name="required" label="Required" type="Boolean" default="false" />
                 <property name="disabled" label="Disabled" type="Boolean" default="false" />
-                <property name="readonly" label="Readonly" type="Boolean" default="false" Description="Only for Component input and textarea" />
+                <property name="readonly" label="Readonly" type="Boolean" default="false" description="Only for Component input and textarea" />
                 <property name="type" label="Type" type="String" default="text" description="Only for Component input. Acceptable values: color, date, datetime, email, number, password, text, time, url" />
                 <property name="formatter" label="Formatter" type="String" description="Only for Component input of Type number. Acceptable values: currency, decimal, percent, percent-fixed" />
                 <property name="max" label="Max" type="String" description="Maximum number of characters or Maximum value acceptable." />

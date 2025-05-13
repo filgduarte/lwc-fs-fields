@@ -42,11 +42,11 @@ export default class Fsf_AIOTextField extends LightningElement {
     }
 
     get isInput() {
-        return this.component === 'text';
+        return this.component === 'input';
     }
 
     get isLong() {
-        return this.component === 'longtext';
+        return this.component === 'textarea';
     }
 
     get isRich() {
@@ -92,14 +92,25 @@ export default class Fsf_AIOTextField extends LightningElement {
                     },
                     { ...props, readonly: this.readonly }
                 );
+
+                if (this.type === 'number') {
+                    if (props.hasOwnProperty(max)) props.max = parseFloat(props.max);
+                    if (props.hasOwnProperty(min)) props.min = parseFloat(props.min);
+                    if (props.hasOwnProperty(step)) props.step = parseFloat(props.step);
+                }
+
+                if (textPropsByTypes[this.type].includes('maxlength')) {
+                    if (props.hasOwnProperty(maxlength)) props.maxlength = parseInt(props.maxlength);
+                    if (props.hasOwnProperty(minlength)) props.minlength = parseInt(props.minlength);
+                }
             break;
 
             case 'longtext':
                 props = {
                     ...props,
                     readonly: this.readonly,
-                    maxlength: this.max,
-                    minlength: this.min,
+                    maxlength: parseInt(this.max),
+                    minlength: parseInt(this.min),
                     placeholder: this.placeholder,
                     'message-when-too-short': this.minErrorMessage,
                     'message-when-too-loong': this.maxErrorMessage,
